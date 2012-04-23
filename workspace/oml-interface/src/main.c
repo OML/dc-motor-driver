@@ -1,7 +1,7 @@
 /*
 ===============================================================================
  Name        : main.c
- Author      : $(author)
+ Author      : Wouter Dijkstra & Leon Colijn
  Version     :
  Copyright   : $(copyright)
  Description : main definition
