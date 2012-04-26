@@ -1,0 +1,60 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<configurationDescriptor version="62">
+    <logicalFolder displayName="root" name="root" projectFiles="true">
+        <logicalFolder displayName="Header Files" name="HeaderFiles" projectFiles="true">
+            <itemPath>system.h</itemPath>
+            <itemPath>user.h</itemPath>
+        </logicalFolder>
+        <logicalFolder displayName="Library Files" name="LibraryFiles" projectFiles="true"/>
+        <logicalFolder displayName="Linker Files" name="LinkerScript" projectFiles="true"/>
+        <logicalFolder displayName="Object Files" name="ObjectFiles" projectFiles="true"/>
+        <logicalFolder displayName="Source Files" name="SourceFiles" projectFiles="true">
+            <itemPath>configuration_bits.c</itemPath>
+            <itemPath>interrupts.c</itemPath>
+            <itemPath>main.c</itemPath>
+            <itemPath>system.c</itemPath>
+            <itemPath>traps.c</itemPath>
+            <itemPath>user.c</itemPath>
+        </logicalFolder>
+        <logicalFolder displayName="Important Files" name="ExternalFiles" projectFiles="false">
+            <itemPath>Makefile</itemPath>
+        </logicalFolder>
+        <itemPath>getting_started.txt</itemPath>
+        <itemPath>legal_disclaimer.txt</itemPath>
+        <itemPath>project_information.txt</itemPath>
+    </logicalFolder>
+    <projectmakefile>Makefile</projectmakefile>
+    <confs>
+        <conf name="default" type="2">
+            <toolsSet>
+                <developmentServer>localhost</developmentServer>
+                <targetDevice>PIC24FJ256GA110</targetDevice>
+                <targetHeader/>
+                <platformTool>ICD3PlatformTool</platformTool>
+                <languageToolchain>C30</languageToolchain>
+                <languageToolchainVersion>3_30b</languageToolchainVersion>
+                <platform>3</platform>
+            </toolsSet>
+            <compileType>
+                <linkerTool>
+                    <linkerLibItems/>
+                </linkerTool>
+            </compileType>
+            <makeCustomizationType>
+                <makeCustomizationPreStepEnabled>false</makeCustomizationPreStepEnabled>
+                <makeCustomizationPreStep/>
+                <makeCustomizationPostStepEnabled>false</makeCustomizationPostStepEnabled>
+                <makeCustomizationPostStep/>
+                <makeCustomizationAlternativeFileToLoadEnabled>false</makeCustomizationAlternativeFileToLoadEnabled>
+                <makeCustomizationAlternativeFileToLoad/>
+                <makeCustomizationUseOfUserID>makeCustomizationUseOfUserID</makeCustomizationUseOfUserID>
+                <makeCustomizationUserID>makeCustomizationUserID</makeCustomizationUserID>
+            </makeCustomizationType>
+            <C30/>
+            <C30-AS/>
+            <C30-LD/>
+            <C30Global/>
+            <ICD3PlatformTool/>
+        </conf>
+    </confs>
+</configurationDescriptor>
