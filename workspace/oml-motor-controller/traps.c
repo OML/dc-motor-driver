@@ -1,15 +1,7 @@
 /******************************************************************************/
 /* Files to Include                                                           */
 /******************************************************************************/
-
-/* Device header file */
-#if defined(__PIC24E__)
-	#include <p24Exxxx.h>
-#elif defined (__PIC24F__)
-	#include <p24Fxxxx.h>
-#elif defined(__PIC24H__)
-	#include <p24Hxxxx.h>
-#endif
+#include "device.h"
 
 #include <stdint.h>        /* Includes uint16_t definition */
 #include <stdbool.h>       /* Includes true/false definition */

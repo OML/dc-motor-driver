@@ -16,6 +16,11 @@
 
 #include "user.h"            /* variables/params used by user.c */
 
+void init_uart(void)
+{
+    
+}
+
 /******************************************************************************/
 /* User Functions                                                             */
 /******************************************************************************/
@@ -29,5 +34,7 @@ void InitApp(void)
     /* Setup analog functionality and port direction */
 
     /* Initialize peripherals */
+
+    init_uart();
 }
 

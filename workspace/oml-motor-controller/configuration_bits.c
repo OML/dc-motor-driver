@@ -2,14 +2,7 @@
 /* Files to Include                                                           */
 /******************************************************************************/
 
-/* Device header file */
-#if defined(__PIC24E__)
-	#include <p24Exxxx.h>
-#elif defined (__PIC24F__)
-	#include <p24Fxxxx.h>
-#elif defined(__PIC24H__)
-	#include <p24Hxxxx.h>
-#endif
+#include "device.h"
 
 /******************************************************************************/
 /* Configuration Bits                                                         */
@@ -24,6 +17,9 @@
 /******************************************************************************/
 
 /* TODO Fill in your configuration bits here.  The general style is below:    */
+
+_FOSCSEL(FNOSC_FRC);
+_FWDT(FWDTEN_OFF);
 
 #if 0
 
