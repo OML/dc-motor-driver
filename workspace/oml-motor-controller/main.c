@@ -10,6 +10,8 @@
 #include "system.h"        /* System funct/params, like osc/peripheral config */
 #include "user.h"          /* User funct/params, such as InitApp              */
 
+#include "connectivity.h"
+
 /******************************************************************************/
 /* Global Variable Declaration                                                */
 /******************************************************************************/
@@ -31,8 +33,13 @@ int16_t main(void)
 
     /* TODO <INSERT USER APPLICATION CODE HERE> */
 
+    init_buffer();
+
     while(1)
     {
-
+        read_instructions();
+        //update_outputs();
+        //read_sensors();
+        //write_sensors();
     }
 }

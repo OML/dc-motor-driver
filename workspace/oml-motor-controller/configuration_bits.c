@@ -18,7 +18,8 @@
 
 /* TODO Fill in your configuration bits here.  The general style is below:    */
 
-_FOSCSEL(FNOSC_FRC);
+_FOSCSEL(FNOSC_PRI);
+_FOSC(POSCMOD_HS)
 _FWDT(FWDTEN_OFF);
 
 #if 0

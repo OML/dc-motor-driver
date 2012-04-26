@@ -2,14 +2,7 @@
 /* Files to Include                                                           */
 /******************************************************************************/
 
-/* Device header file */
-#if defined(__PIC24E__)
-	#include <p24Exxxx.h>
-#elif defined (__PIC24F__)
-	#include <p24Fxxxx.h>
-#elif defined(__PIC24H__)
-	#include <p24Hxxxx.h>
-#endif
+#include "device.h"
 
 #include <stdint.h>          /* For uint32_t definition */
 #include <stdbool.h>         /* For true/false definition */
@@ -29,5 +22,17 @@ void InitApp(void)
     /* Setup analog functionality and port direction */
 
     /* Initialize peripherals */
+
+    // Configure UART1
+    U1MODE = 0;
+    U1BRG = (((FOSC/2) / BAUD)/6)-1;
+    U1MODEbits.ABAUD = 1;
+
+    U1STA = 0;
+    U1STAbits.URXISEL = 0b00;   // per-byte interrupt
+
+    U1MODEbits.UARTEN = 1;
+
+    U1STAbits.UTXEN = 1;
 }
 

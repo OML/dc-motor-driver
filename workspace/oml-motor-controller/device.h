@@ -1,3 +1,5 @@
+#ifndef _DEVICE_H
+#define _DEVICE_H
 
 /* Device header file */
 #if defined(__PIC24E__)
@@ -8,3 +10,8 @@
 	#include <p24Hxxxx.h>
 #endif
 #include <p24F16KA302.h>
+
+#define BAUD 9600
+#define FOSC 4000000
+
+#endif /* device.h */

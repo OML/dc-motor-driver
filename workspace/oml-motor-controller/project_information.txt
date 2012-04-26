@@ -1,12 +1,12 @@
 <Application Description for Project Goes Here>
 
-Project Owner(s):
-Author(s):
-Hardware Platform:
-Debuggers Used:
-Programmers Used:
-MPLAB Version:
-C Compiler Version:
+Project Owner(s): Operation Morning Light
+Author(s): Wouter Dijkstra & Leon Colijn
+Hardware Platform: PIC24F16KA302
+Debuggers Used: N/A
+Programmers Used: pickit2
+MPLAB Version: MPLAB X 1.10
+C Compiler Version: MPLAB C30 3.30
 Final Checksum:
 
 FILES INCLUDED IN THE PROJECT TREE:
