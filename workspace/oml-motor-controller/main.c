@@ -10,12 +10,7 @@
 #include "system.h"        /* System funct/params, like osc/peripheral config */
 
 #include "connectivity.h"
-
-/******************************************************************************/
-/* Global Variable Declaration                                                */
-/******************************************************************************/
-
-/* i.e. uint16_t <variable_name>; */
+#include "motors.h"
 
 /******************************************************************************/
 /* Main Program                                                               */
@@ -28,12 +23,13 @@ int16_t main(void)
     ConfigureOscillator();
 
     init_connectivity();
-
+    init_motors();
+    
     while(1)
     {
         read_instructions();
-        //update_motors();
-        //read_sensors();
-        //write_sensors();
+        update_motors();
+        read_sensors();
+        send_response();
     }
 }

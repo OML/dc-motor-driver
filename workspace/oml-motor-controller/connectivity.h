@@ -8,5 +8,6 @@ extern struct motcon_buffer buffer;
 void init_connectivity(void);
 
 void read_instructions(void);
+void send_response(void);
 
 #endif /* connectivity.h */

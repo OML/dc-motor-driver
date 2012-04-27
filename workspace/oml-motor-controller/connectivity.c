@@ -36,3 +36,8 @@ void read_instructions(void)
         ((char*)(&buffer))[pos] = U1RXREG;
     }
 }
+
+void send_response(void)
+{
+    
+}

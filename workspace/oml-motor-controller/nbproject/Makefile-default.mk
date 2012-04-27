@@ -41,11 +41,11 @@ OBJECTDIR=build/${CND_CONF}/${IMAGE_TYPE}
 DISTDIR=dist/${CND_CONF}/${IMAGE_TYPE}
 
 # Object Files Quoted if spaced
-OBJECTFILES_QUOTED_IF_SPACED=${OBJECTDIR}/configuration_bits.o ${OBJECTDIR}/interrupts.o ${OBJECTDIR}/main.o ${OBJECTDIR}/system.o ${OBJECTDIR}/traps.o ${OBJECTDIR}/user.o ${OBJECTDIR}/connectivity.o
-POSSIBLE_DEPFILES=${OBJECTDIR}/configuration_bits.o.d ${OBJECTDIR}/interrupts.o.d ${OBJECTDIR}/main.o.d ${OBJECTDIR}/system.o.d ${OBJECTDIR}/traps.o.d ${OBJECTDIR}/user.o.d ${OBJECTDIR}/connectivity.o.d
+OBJECTFILES_QUOTED_IF_SPACED=${OBJECTDIR}/configuration_bits.o ${OBJECTDIR}/interrupts.o ${OBJECTDIR}/main.o ${OBJECTDIR}/system.o ${OBJECTDIR}/traps.o ${OBJECTDIR}/connectivity.o ${OBJECTDIR}/motors.o
+POSSIBLE_DEPFILES=${OBJECTDIR}/configuration_bits.o.d ${OBJECTDIR}/interrupts.o.d ${OBJECTDIR}/main.o.d ${OBJECTDIR}/system.o.d ${OBJECTDIR}/traps.o.d ${OBJECTDIR}/connectivity.o.d ${OBJECTDIR}/motors.o.d
 
 # Object Files
-OBJECTFILES=${OBJECTDIR}/configuration_bits.o ${OBJECTDIR}/interrupts.o ${OBJECTDIR}/main.o ${OBJECTDIR}/system.o ${OBJECTDIR}/traps.o ${OBJECTDIR}/user.o ${OBJECTDIR}/connectivity.o
+OBJECTFILES=${OBJECTDIR}/configuration_bits.o ${OBJECTDIR}/interrupts.o ${OBJECTDIR}/main.o ${OBJECTDIR}/system.o ${OBJECTDIR}/traps.o ${OBJECTDIR}/connectivity.o ${OBJECTDIR}/motors.o
 
 
 CFLAGS=
@@ -111,17 +111,17 @@ ${OBJECTDIR}/traps.o: traps.c  nbproject/Makefile-${CND_CONF}.mk
 	@${RM} ${OBJECTDIR}/traps.o.ok ${OBJECTDIR}/traps.o.err 
 	@${FIXDEPS} "${OBJECTDIR}/traps.o.d" $(SILENT) -c ${MP_CC} $(MP_EXTRA_CC_PRE) -g -D__DEBUG -D__MPLAB_DEBUGGER_ICD3=1 -omf=elf -x c -c -mcpu=$(MP_PROCESSOR_OPTION)  -MMD -MF "${OBJECTDIR}/traps.o.d" -o ${OBJECTDIR}/traps.o traps.c  
 	
-${OBJECTDIR}/user.o: user.c  nbproject/Makefile-${CND_CONF}.mk
-	@${MKDIR} ${OBJECTDIR} 
-	@${RM} ${OBJECTDIR}/user.o.d 
-	@${RM} ${OBJECTDIR}/user.o.ok ${OBJECTDIR}/user.o.err 
-	@${FIXDEPS} "${OBJECTDIR}/user.o.d" $(SILENT) -c ${MP_CC} $(MP_EXTRA_CC_PRE) -g -D__DEBUG -D__MPLAB_DEBUGGER_ICD3=1 -omf=elf -x c -c -mcpu=$(MP_PROCESSOR_OPTION)  -MMD -MF "${OBJECTDIR}/user.o.d" -o ${OBJECTDIR}/user.o user.c  
-	
 ${OBJECTDIR}/connectivity.o: connectivity.c  nbproject/Makefile-${CND_CONF}.mk
 	@${MKDIR} ${OBJECTDIR} 
 	@${RM} ${OBJECTDIR}/connectivity.o.d 
 	@${RM} ${OBJECTDIR}/connectivity.o.ok ${OBJECTDIR}/connectivity.o.err 
 	@${FIXDEPS} "${OBJECTDIR}/connectivity.o.d" $(SILENT) -c ${MP_CC} $(MP_EXTRA_CC_PRE) -g -D__DEBUG -D__MPLAB_DEBUGGER_ICD3=1 -omf=elf -x c -c -mcpu=$(MP_PROCESSOR_OPTION)  -MMD -MF "${OBJECTDIR}/connectivity.o.d" -o ${OBJECTDIR}/connectivity.o connectivity.c  
+	
+${OBJECTDIR}/motors.o: motors.c  nbproject/Makefile-${CND_CONF}.mk
+	@${MKDIR} ${OBJECTDIR} 
+	@${RM} ${OBJECTDIR}/motors.o.d 
+	@${RM} ${OBJECTDIR}/motors.o.ok ${OBJECTDIR}/motors.o.err 
+	@${FIXDEPS} "${OBJECTDIR}/motors.o.d" $(SILENT) -c ${MP_CC} $(MP_EXTRA_CC_PRE) -g -D__DEBUG -D__MPLAB_DEBUGGER_ICD3=1 -omf=elf -x c -c -mcpu=$(MP_PROCESSOR_OPTION)  -MMD -MF "${OBJECTDIR}/motors.o.d" -o ${OBJECTDIR}/motors.o motors.c  
 	
 else
 ${OBJECTDIR}/configuration_bits.o: configuration_bits.c  nbproject/Makefile-${CND_CONF}.mk
@@ -154,17 +154,17 @@ ${OBJECTDIR}/traps.o: traps.c  nbproject/Makefile-${CND_CONF}.mk
 	@${RM} ${OBJECTDIR}/traps.o.ok ${OBJECTDIR}/traps.o.err 
 	@${FIXDEPS} "${OBJECTDIR}/traps.o.d" $(SILENT) -c ${MP_CC} $(MP_EXTRA_CC_PRE)  -g -omf=elf -x c -c -mcpu=$(MP_PROCESSOR_OPTION)  -MMD -MF "${OBJECTDIR}/traps.o.d" -o ${OBJECTDIR}/traps.o traps.c  
 	
-${OBJECTDIR}/user.o: user.c  nbproject/Makefile-${CND_CONF}.mk
-	@${MKDIR} ${OBJECTDIR} 
-	@${RM} ${OBJECTDIR}/user.o.d 
-	@${RM} ${OBJECTDIR}/user.o.ok ${OBJECTDIR}/user.o.err 
-	@${FIXDEPS} "${OBJECTDIR}/user.o.d" $(SILENT) -c ${MP_CC} $(MP_EXTRA_CC_PRE)  -g -omf=elf -x c -c -mcpu=$(MP_PROCESSOR_OPTION)  -MMD -MF "${OBJECTDIR}/user.o.d" -o ${OBJECTDIR}/user.o user.c  
-	
 ${OBJECTDIR}/connectivity.o: connectivity.c  nbproject/Makefile-${CND_CONF}.mk
 	@${MKDIR} ${OBJECTDIR} 
 	@${RM} ${OBJECTDIR}/connectivity.o.d 
 	@${RM} ${OBJECTDIR}/connectivity.o.ok ${OBJECTDIR}/connectivity.o.err 
 	@${FIXDEPS} "${OBJECTDIR}/connectivity.o.d" $(SILENT) -c ${MP_CC} $(MP_EXTRA_CC_PRE)  -g -omf=elf -x c -c -mcpu=$(MP_PROCESSOR_OPTION)  -MMD -MF "${OBJECTDIR}/connectivity.o.d" -o ${OBJECTDIR}/connectivity.o connectivity.c  
+	
+${OBJECTDIR}/motors.o: motors.c  nbproject/Makefile-${CND_CONF}.mk
+	@${MKDIR} ${OBJECTDIR} 
+	@${RM} ${OBJECTDIR}/motors.o.d 
+	@${RM} ${OBJECTDIR}/motors.o.ok ${OBJECTDIR}/motors.o.err 
+	@${FIXDEPS} "${OBJECTDIR}/motors.o.d" $(SILENT) -c ${MP_CC} $(MP_EXTRA_CC_PRE)  -g -omf=elf -x c -c -mcpu=$(MP_PROCESSOR_OPTION)  -MMD -MF "${OBJECTDIR}/motors.o.d" -o ${OBJECTDIR}/motors.o motors.c  
 	
 endif
 
