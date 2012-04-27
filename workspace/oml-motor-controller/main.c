@@ -8,7 +8,6 @@
 #include <stdbool.h>       /* Includes true/false definition                  */
 
 #include "system.h"        /* System funct/params, like osc/peripheral config */
-#include "user.h"          /* User funct/params, such as InitApp              */
 
 #include "connectivity.h"
 
@@ -28,17 +27,12 @@ int16_t main(void)
     /* Configure the oscillator for the device */
     ConfigureOscillator();
 
-    /* Initialize IO ports and peripherals */
-    InitApp();
-
-    /* TODO <INSERT USER APPLICATION CODE HERE> */
-
-    init_buffer();
+    init_connectivity();
 
     while(1)
     {
         read_instructions();
-        //update_outputs();
+        //update_motors();
         //read_sensors();
         //write_sensors();
     }
