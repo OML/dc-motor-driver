@@ -24,7 +24,7 @@ CLEAN_SUBPROJECTS=${CLEAN_SUBPROJECTS_${SUBPROJECTS}}
 
 
 # Project Name
-PROJECTNAME=oml-motor-controller
+PROJECTNAME=oml-motor-controller.X
 
 # Active Configuration
 DEFAULTCONF=default
