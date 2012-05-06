@@ -8,8 +8,6 @@ extern volatile uint8_t buffer[];
 
 void init_connectivity(void);
 
-void read_instructions(void);
-
-void send_buffer(void);
+void do_communication_tasks(void);
 
 #endif /* connectivity.h */

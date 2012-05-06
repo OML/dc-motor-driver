@@ -14,4 +14,6 @@
 #define BAUD 9600
 #define FOSC 16000000L
 
+#define N_MOTORS 2
+
 #endif /* device.h */

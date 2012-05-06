@@ -1,6 +1,8 @@
 #ifndef _PROT_MOTCON_H
 #define _PROT_MOTCON_H
 
+#include "device.h"
+
 /*
  * The Motor conctroller communication protocol
  *
@@ -24,7 +26,7 @@ struct motor
 struct motcon_buffer
 {
     uint16_t            flags;
-    struct motor        motor[2];
+    struct motor        motor[N_MOTORS];
 } __attribute__((packed));
 
 

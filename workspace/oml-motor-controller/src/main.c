@@ -23,18 +23,20 @@ static void init_interrupts(void)
 
 int16_t main(void)
 {
-    /* Configure the oscillator for the device */
-    ConfigureOscillator();
+        /* Configure the oscillator for the device */
+        ConfigureOscillator();
 
 	init_interrupts();
 
-    init_connectivity();
-    //init_motors();
+        init_connectivity();
+        init_motors();
     
-    while(1)
-    {
-        read_instructions();
-        update_motors();
-        read_sensors();
-    }
+        while(1)
+        {
+                update_motors();
+                read_sensors();
+
+                do_communication_tasks();
+
+        }
 }
