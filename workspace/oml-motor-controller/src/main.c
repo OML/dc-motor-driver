@@ -12,24 +12,29 @@
 #include "connectivity.h"
 #include "motors.h"
 
+static void init_interrupts(void)
+{
+//	IEC1bits.INT0IE = 0;
+}
+
 /******************************************************************************/
 /* Main Program                                                               */
 /******************************************************************************/
 
 int16_t main(void)
 {
-
     /* Configure the oscillator for the device */
     ConfigureOscillator();
 
+	init_interrupts();
+
     init_connectivity();
-    init_motors();
+    //init_motors();
     
     while(1)
     {
         read_instructions();
         update_motors();
         read_sensors();
-        send_response();
     }
 }

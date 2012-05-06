@@ -12,6 +12,6 @@
 #include <p24F16KA302.h>
 
 #define BAUD 9600
-#define FOSC 4000000
+#define FOSC 16000000L
 
 #endif /* device.h */

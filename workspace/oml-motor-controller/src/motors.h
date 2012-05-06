@@ -1,6 +1,7 @@
 #ifndef _MOTORS_H
 #define _MOTORS_H
 
+#include <stdint.h>
 
 #define MOT1_CURRENT_PIN    15
 #define MOT1_VOLTAGE_PIN    14
@@ -18,7 +19,14 @@
 
 void init_motors(void);
 
+/*
+ * motor = 1 | 2
+ * value = 0..100 (%)
+ */
+void motor_set_power(int motor, uint8_t value);
 void update_motors(void);
+
+
 void read_sensors(void);
 
 #endif /* motors.h */

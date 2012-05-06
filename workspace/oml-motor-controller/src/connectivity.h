@@ -3,11 +3,13 @@
 
 #include "prot_motcon.h"
 
-extern struct motcon_buffer buffer;
+extern struct motcon_buffer device;
+extern volatile uint8_t buffer[];
 
 void init_connectivity(void);
 
 void read_instructions(void);
-void send_response(void);
+
+void send_buffer(void);
 
 #endif /* connectivity.h */
