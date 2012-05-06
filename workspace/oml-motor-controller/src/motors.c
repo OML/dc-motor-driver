@@ -7,24 +7,19 @@
 
 static void init_adc(void)
 {
-    // Configure ports for analog input
-    ANSA = 0;
-    ANSB =    (1 << MOT1_TEMP_PIN) | (1 << MOT1_CURRENT_PIN)
-            | (1 << MOT1_VOLTAGE_PIN)
-            | (1 << MOT2_TEMP_PIN) | (1 << MOT2_CURRENT_PIN)
-            | (1 << MOT2_VOLTAGE_PIN);
+        // Configure ports for analog input
+        ANSA = 0;
+        ANSB =    (1 << MOT1_TEMP_PIN) | (1 << MOT1_CURRENT_PIN)
+                | (1 << MOT1_VOLTAGE_PIN)
+                | (1 << MOT2_TEMP_PIN) | (1 << MOT2_CURRENT_PIN)
+                | (1 << MOT2_VOLTAGE_PIN);
 
-    AD1CON1 = 0;
-    AD1CON1bits.SSRC = 0b0111;  // Start conversion after sampling
-    AD1CON2 = 0;
-    AD1CON3 = 0;
-    AD1CON3bits.SAMC = 16;      // Sample time = 16 * Tad
-    AD1CON3bits.ADCS = 32-1;    // Tad = 32 * Tcy
-    AD1CON5 = 0;
 
-    AD1CHS = 0;
+        AD1CON1 = 0x0070;
+        AD1CON2 = 0x0800;
+        AD1CON3 = 0x1F01;
 
-    AD1CON1bits.ADON = 1;       // Enable
+        AD1CON1bits.ADON = 1;       // Enable
 
 
 	// Configure PWM
@@ -56,7 +51,7 @@ static void init_adc(void)
 
 void init_motors(void)
 {
-    init_adc();
+        init_adc();
 }
 
 void motor_set_power(int motor, uint8_t value)
@@ -77,13 +72,13 @@ void motor_set_power(int motor, uint8_t value)
 
 void update_motors(void)
 {
-    motor_set_power(1, device.motor[0].throttle/10);
+        motor_set_power(1, device.motor[0].throttle/10);
 	motor_set_power(2, device.motor[1].throttle/10);
 }
 
 static uint16_t read_adc(int channel)
 {
-    AD1CHSbits.CH0SB = channel;
+    AD1CHSbits.CH0SA = channel;
     AD1CON1bits.SAMP = 1;
     while(!AD1CON1bits.DONE);
     return *((&ADC1BUF0) + channel);
@@ -100,8 +95,7 @@ static uint16_t adval_to_temp(uint16_t val)
 
 static uint16_t adval_to_current(uint16_t val)
 {
-#warning "adval_to_current not implemented"
-    return val;
+        return ((uint32_t)(9900L*val))/0x3FFL;
 }
 
 static uint16_t adval_to_voltage(uint16_t val)
