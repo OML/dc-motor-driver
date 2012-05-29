@@ -33,7 +33,7 @@ _FWDT(FWDTEN_OFF);
 /* TODO Add clock switching code if appropriate.  An example stub is below.   */
 void ConfigureOscillator(void)
 {
-	asm(
+/*	asm(
 		"mov #0x3, w0\n"		// PRI + PLL
 		// Unlock OSCCONH
 		"mov #OSCCONH, w1\n"
@@ -59,5 +59,6 @@ void ConfigureOscillator(void)
 		:"w0", "w1", "w2", "w3");
 
 	while(!OSCCONbits.LOCK);	// Wait for lock	
+*/
 }
 

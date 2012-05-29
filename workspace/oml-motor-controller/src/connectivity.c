@@ -7,8 +7,7 @@
 #include <ctype.h>
 #include <stdio.h>
 
-
-struct motcon_buffer device;
+#include "motors.h"
 
 #define RX_DONE (1 << 0)
 #define RX_TEXT (1 << 1)
@@ -22,6 +21,7 @@ volatile uint8_t rx_flags = 0;
 volatile uint8_t tx_buffer[128];
 volatile uint8_t tx_current = 0;
 volatile uint8_t tx_size = 0;
+
 
 void init_connectivity(void)
 {
@@ -108,6 +108,15 @@ static void eval_cmd(const char* cmd)
         int level = MOTCON;
         int operation = OP_READ;
 
+        if(strncmp(cmd, "demo", 4) == 0) {
+                demo = 1;     
+                return;
+        }
+        if(strncmp(cmd, "stop", 4) == 0) {
+                demo = 0;
+                return;
+        }
+
         uint8_t* property = (uint8_t*)&device;
         
         while(pos < end) {
@@ -169,6 +178,8 @@ static void eval_cmd(const char* cmd)
                         pos++;
                 } else if(strncmp(start, "throttle", pos-start) == 0) {
                         property += offsetof(struct motor, throttle);
+                } else if(strncmp(start, "throttle_actual", pos-start) == 0) {
+                        property += offsetof(struct motor, throttle_actual);
                 } else if(strncmp(start, "current", pos-start) == 0) {
                         property += offsetof(struct motor, current);
                 } else if(strncmp(start, "voltage", pos-start) == 0) {
@@ -196,6 +207,8 @@ static void eval_cmd(const char* cmd)
                                 *((uint16_t*)property) = MOT_FORWARD;
                         else if(strncmp(start, "backward", pos-start) == 0) 
                                 *((uint16_t*)property) = MOT_BACKWARD;
+                        else if(strncmp(start, "brake", pos-start) == 0) 
+                                *((uint16_t*)property) = MOT_BRAKE;
                         else {
                                 transmit("Invalid value\n", 0);
                                 return;

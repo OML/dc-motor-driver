@@ -13,6 +13,7 @@
 /* Values for motor_info.flags */
 #define MOT_FORWARD         (1 << 0)
 #define MOT_BACKWARD        (1 << 1)
+#define MOT_BRAKE           (1 << 2)
 
 struct motor
 {
@@ -21,6 +22,7 @@ struct motor
     uint16_t                voltage;        /* millivolts */
     uint16_t                temp;           /* millidegrees */
     uint16_t                throttle;       /* promille */
+    uint16_t                throttle_actual;/* idem */
 } __attribute__((packed));
 
 struct motcon_buffer
