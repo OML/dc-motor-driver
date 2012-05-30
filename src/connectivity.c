@@ -2,6 +2,7 @@
 
 #include "busprot.h"
 #include "device.h"
+#include "motors.h"
 
 #include <string.h>
 #include <stdlib.h>
@@ -9,7 +10,6 @@
 #include <stdio.h>
 
 
-struct motcon_buffer device;
 
 #define RX_DONE (1 << 0)
 #define RX_TEXT (1 << 1)
@@ -75,6 +75,23 @@ void __attribute__((interrupt, no_auto_psv)) _U1RXInterrupt(void)
 			if(event_hdr->type == EV_SET_THROTTLES)
 			{
 				set_driver = (struct bus_set_motor_driver*)((char*)event_hdr + sizeof(event_hdr));
+				
+				device.motor[0].throttle = abs(set_driver->motors[0]);
+				if(set_driver->motors[0] > 0)
+					device.motor[0].flags = MOT_FORWARD;
+				else if(set_driver->motors[0] < 0)
+					device.motor[0].flags = MOT_BACKWARD;
+				else
+					device.motor[0].flags = MOT_BRAKE;
+
+
+				device.motor[1].throttle = abs(set_driver->motors[0]);
+				if(set_driver->motors[1] > 0)
+					device.motor[1].flags = MOT_FORWARD;
+				else if(set_driver->motors[1] < 0)
+					device.motor[1].flags = MOT_BACKWARD;
+				else
+					device.motor[1].flags = MOT_BRAKE;
 				
 				motor_set_power(1,set_driver->motors[0]/10);
 				motor_set_power(2,set_driver->motors[1]/10);

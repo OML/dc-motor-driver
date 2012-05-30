@@ -43,6 +43,4 @@ void read_sensors(void);
 extern struct motcon_buffer device;
 
 
-extern int demo;
-
 #endif /* motors.h */

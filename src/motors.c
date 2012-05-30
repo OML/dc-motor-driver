@@ -17,33 +17,19 @@ int demo_up = 0;
 
 void __attribute__((interrupt,auto_psv)) _T1Interrupt(void)
 {
-        struct motor* m;
-        if(demo) {
-                if(device.motor[0].throttle_actual == 0x3FF)
-                        demo_up = 0;
-                else if(device.motor[1].throttle_actual == 0)
-                        demo_up = 1;
+	struct motor* m;
+    int i;
 
-                if(demo_up) {
-                        device.motor[0].throttle_actual += DEMO_INCREMENT;
-                        device.motor[1].throttle_actual -= DEMO_INCREMENT;
-                } else {        
-                        device.motor[0].throttle_actual -= DEMO_INCREMENT;
-                        device.motor[1].throttle_actual += DEMO_INCREMENT;
-                
+    for(i = 0; i < 2; i++) {
+        m = &device.motor[i];
+            if(m->throttle == 0)
+              	m->throttle_actual = 0;
+            else if(m->throttle_actual < m->throttle)
+                m->throttle_actual += THROTTLE_INCREMENT;
+            else if(m->throttle_actual > m->throttle)
+              	m->throttle_actual -= THROTTLE_INCREMENT;
                 }
-        } else {
-                int i;
-                for(i = 0; i < 2; i++) {
-                        m = &device.motor[i];
-                        if(m->throttle == 0)
-                                m->throttle_actual = 0;
-                        else if(m->throttle_actual < m->throttle)
-                                m->throttle_actual += THROTTLE_INCREMENT;
-                        else if(m->throttle_actual > m->throttle)
-                                m->throttle_actual -= THROTTLE_INCREMENT;
-                }
-        }
+        
         IFS0bits.T1IF = 0;
 }
 
@@ -137,7 +123,7 @@ void motor_set_power(int motor, uint8_t value)
 void update_motors(void)
 {
         motor_set_power(1, device.motor[0].throttle_actual/10);
-	motor_set_power(2, device.motor[1].throttle_actual/10);
+		motor_set_power(2, device.motor[1].throttle_actual/10);
         
         struct motor* m;
 
