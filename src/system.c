@@ -4,28 +4,10 @@
 
 #include "device.h"
 
-#include <stdint.h>          /* For uint32_t definition */
-#include <stdbool.h>         /* For true/false definition */
+#include <stdbool.h>
 
-#include "system.h"          /* variables/params used by system.c */
-
-/******************************************************************************/
-/* System Level Functions                                                     */
-/*                                                                            */
-/* Custom oscillator configuration funtions, reset source evaluation          */
-/* functions, and other non-peripheral microcontroller initialization         */
-/* functions get placed in system.c                                           */
-/*                                                                            */
-/******************************************************************************/
-
-/* Refer to the device Family Reference Manual Oscillator section for
-information about available oscillator configurations.  Typically
-this would involve configuring the oscillator tuning register or clock
-switching useing the compiler's __builtin_write_OSCCON functions.
-Refer to the C Compiler for PIC24 MCUs and dsPIC DSCs User Guide in the
-compiler installation directory /doc folder for documentation on the
-__builtin functions. */
-
+#include "system.h"     
+     
 _FOSCSEL(FNOSC_PRI);
 _FOSC(POSCMOD_HS & POSCFREQ_MS & FCKSM_CSECMD);
 _FWDT(FWDTEN_OFF);

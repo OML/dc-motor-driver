@@ -12,31 +12,30 @@
 #include "connectivity.h"
 #include "motors.h"
 
-static void init_interrupts(void)
-{
-//	IEC1bits.INT0IE = 0;
-}
+#include <bus.h>
+#include <offsets.h>
 
-/******************************************************************************/
-/* Main Program                                                               */
-/******************************************************************************/
+void incoming_event(struct bus_descriptor* bus, char* data, size_t len)
+{
+        struct bus_event_hdr* evhdr = get_bus_event_header(data);
+        switch(evhdr->type) {
+        }
+}
 
 int16_t main(void)
 {
         /* Configure the oscillator for the device */
         ConfigureOscillator();
+        
+        bus_init(1, DT_DUAL_MOTOR);
 
-	init_interrupts();
-
-        init_connectivity();
         init_motors();
     
         while(1)
         {
                 update_motors();
                 read_sensors();
-
-                do_communication_tasks();
-
+                
+                bus_do_work();
         }
 }
