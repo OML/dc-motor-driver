@@ -18,7 +18,7 @@
 #include <offsets.h>
 
 //volatile uint16_t addr;
-volatile uint16_t source;
+//volatile uint16_t source;
 
 volatile uint8_t rx_buffer[128];
 volatile uint8_t rx_current = 0;
@@ -31,67 +31,34 @@ volatile uint8_t tx_size = 0;
 
 void incoming_event(struct bus_descriptor* bus, char* data, size_t len)
 {
-        struct bus_event_hdr* evhdr = get_bus_event_header(data);
+    struct bus_event_hdr* evhdr = get_bus_event_header(data);
+	struct bus_set_motor_driver* setmotor = get_bus_set_motor_driver(data);
 
     switch(evhdr->type) 
 	{
-		rx_buffer[rx_current] = U1RXREG;
-		rx_current++;
+		if(evhdr->type == EV_SET_THROTTLES)
+		{	
+			device.motor[0].throttle = abs(setmotor->motors[0]);
+			if(setmotor->motors[0] > 0)
+				device.motor[0].flags = MOT_FORWARD;
+			else if(setmotor->motors[0] < 0)
+				device.motor[0].flags = MOT_BACKWARD;
+			else
+				device.motor[0].flags = MOT_BRAKE;
 
-		struct bus_hdr* header;
-		struct bus_event_hdr* event_hdr;
-		struct bus_set_motor_driver* set_driver;
 
-		if(rx_current == 2)
-		{
-			memcpy((uint8_t*)&rx_length, (uint8_t*)(rx_buffer), 2); // put the first 2 bytes into rx_length
+				device.motor[1].throttle = abs(setmotor->motors[0]);
+			if(setmotor->motors[1] > 0)
+				device.motor[1].flags = MOT_FORWARD;
+			else if(setmotor->motors[1] < 0)
+				device.motor[1].flags = MOT_BACKWARD;
+			else
+				device.motor[1].flags = MOT_BRAKE;
+
+			motor_set_power(1,setmotor->motors[0]/10);
+			motor_set_power(2,setmotor->motors[1]/10);
 		}
-
-		if(rx_current == rx_length)
-		{
-			header = (struct bus_hdr*)(rx_buffer + sizeof(uint16_t));
-			if(header->opcode.op == BUSOP_HELLO)
-			{
-				memcpy((uint16_t*)&addr, (uint16_t*)header->daddr,2);
-				memcpy((uint16_t*)&source, (uint16_t*)header->saddr,2);
-			}
-
-			if(header->opcode.op == BUSOP_EVENT && header->daddr == addr)
-			{
-				event_hdr = (struct bus_event_hdr*)((char*)header + sizeof(header));
-
-				if(event_hdr->type == EV_SET_THROTTLES)
-				{
-					set_driver = (struct bus_set_motor_driver*)((char*)event_hdr + sizeof(event_hdr));
-	
-					device.motor[0].throttle = abs(set_driver->motors[0]);
-					if(set_driver->motors[0] > 0)
-						device.motor[0].flags = MOT_FORWARD;
-					else if(set_driver->motors[0] < 0)
-						device.motor[0].flags = MOT_BACKWARD;
-					else
-						device.motor[0].flags = MOT_BRAKE;
-
-
-					device.motor[1].throttle = abs(set_driver->motors[0]);
-					if(set_driver->motors[1] > 0)
-						device.motor[1].flags = MOT_FORWARD;
-					else if(set_driver->motors[1] < 0)
-						device.motor[1].flags = MOT_BACKWARD;
-					else
-						device.motor[1].flags = MOT_BRAKE;
-
-					motor_set_power(1,set_driver->motors[0]/10);
-					motor_set_power(2,set_driver->motors[1]/10);
-				}
-			}
-
-			if(header->opcode.op == BUSOP_DONE)
-			{
-				//nothing?
-			}
-		}
-	}
+	}	
 }
 
 int16_t main(void)
