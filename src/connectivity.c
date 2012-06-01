@@ -19,7 +19,7 @@ void uart_init(struct uart_descriptor* uart, size_t uid)
 
 	TRISBbits.TRISB7 = 0;
 
-	U1BRG = 51;
+	U1BRG = 25;
 	U1MODE = 0x8000;
 	U1STA = 0x0400;
 
