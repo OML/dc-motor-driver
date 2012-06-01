@@ -17,17 +17,6 @@
 #include <bus.h>
 #include <offsets.h>
 
-//volatile uint16_t addr;
-//volatile uint16_t source;
-
-volatile uint8_t rx_buffer[128];
-volatile uint8_t rx_current = 0;
-volatile uint8_t rx_flags = 0;
-volatile uint8_t rx_length;
-
-volatile uint8_t tx_buffer[128];
-volatile uint8_t tx_current = 0;
-volatile uint8_t tx_size = 0;
 
 void incoming_event(struct bus_descriptor* bus, char* data, size_t len)
 {
