@@ -20,6 +20,7 @@
 
 void incoming_event(struct bus_descriptor* bus, char* data, size_t len)
 {
+	__builtin_nop();
     struct bus_event_hdr* evhdr = get_bus_event_header(data);
 	struct bus_set_motor_driver* setmotor = get_bus_set_motor_driver(data);
 
@@ -54,16 +55,22 @@ int16_t main(void)
 {
         /* Configure the oscillator for the device */
         ConfigureOscillator();
+
+		clock_start();
         
         bus_init(1, DT_DUAL_MOTOR);
 
         init_motors();
-    
+
+
         while(1)
         {
-                update_motors();
-                read_sensors();
-                
-                bus_do_work();
+		
+		
+		//	while(U1STAbits.UTXBF);
+		//	U1TXREG = 'U';
+               update_motors();
+               read_sensors();      
+               bus_do_work();
         }
 }

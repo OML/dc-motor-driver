@@ -13,6 +13,7 @@
 
 #define BAUD 9600
 #define FOSC 16000000L
+#define FCY (FOSC/2)
 
 #define N_MOTORS 2
 
