@@ -8,9 +8,10 @@
 
 #include "system.h"     
      
-_FOSCSEL(FNOSC_PRI);
+_FOSCSEL(FNOSC_PRIPLL);
 _FOSC(POSCMOD_HS & POSCFREQ_MS & FCKSM_CSECMD);
 _FWDT(FWDTEN_OFF);
+_FPOR(MCLRE_OFF);
 
 /* TODO Add clock switching code if appropriate.  An example stub is below.   */
 void ConfigureOscillator(void)

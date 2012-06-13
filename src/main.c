@@ -23,10 +23,14 @@ void incoming_event(struct bus_descriptor* bus, char* data, size_t len)
 	__builtin_nop();
     struct bus_event_hdr* evhdr = get_bus_event_header(data);
 	struct bus_set_motor_driver* setmotor = get_bus_set_motor_driver(data);
+	
 
+	uint16_t testint;
+	memcpy(&testint, &device.motor[1].throttle, 2);
+	__builtin_nop();
     switch(evhdr->type) 
 	{
-		if(evhdr->type == EV_SET_THROTTLES)
+		case EV_SET_THROTTLES:
 		{	
 			device.motor[0].throttle = abs(setmotor->motors[0]);
 			if(setmotor->motors[0] > 0)
@@ -36,8 +40,9 @@ void incoming_event(struct bus_descriptor* bus, char* data, size_t len)
 			else
 				device.motor[0].flags = MOT_BRAKE;
 
+			motor_set_power(1,setmotor->motors[0]/10);
 
-				device.motor[1].throttle = abs(setmotor->motors[0]);
+				device.motor[1].throttle = abs(setmotor->motors[1]);
 			if(setmotor->motors[1] > 0)
 				device.motor[1].flags = MOT_FORWARD;
 			else if(setmotor->motors[1] < 0)
@@ -45,7 +50,7 @@ void incoming_event(struct bus_descriptor* bus, char* data, size_t len)
 			else
 				device.motor[1].flags = MOT_BRAKE;
 
-			motor_set_power(1,setmotor->motors[0]/10);
+
 			motor_set_power(2,setmotor->motors[1]/10);
 		}
 	}	
@@ -66,11 +71,10 @@ int16_t main(void)
         while(1)
         {
 		
-		
 		//	while(U1STAbits.UTXBF);
 		//	U1TXREG = 'U';
-               update_motors();
-               read_sensors();      
-               bus_do_work();
+              update_motors();
+              read_sensors();      
+              bus_do_work();
         }
 }

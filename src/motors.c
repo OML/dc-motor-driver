@@ -6,7 +6,7 @@
 
 struct motcon_buffer device;
 
-#define PWM_PERIOD 1600
+#define PWM_PERIOD 6400
 
 #define THROTTLE_TDELTA 0xFFFF
 #define THROTTLE_INCREMENT 4
@@ -122,9 +122,11 @@ void motor_set_power(int motor, uint8_t value)
 
 void update_motors(void)
 {
-        motor_set_power(1, device.motor[0].throttle_actual/10);
-		motor_set_power(2, device.motor[1].throttle_actual/10);
-        
+        motor_set_power(1, 100);//device.motor[0].throttle_actual/10);
+		motor_set_power(2, 200);//device.motor[1].throttle_actual/10);
+        device.motor[0].flags = MOT_FORWARD;
+		device.motor[1].flags = MOT_FORWARD;
+
         struct motor* m;
 
         m = &device.motor[0];
@@ -150,7 +152,7 @@ void update_motors(void)
         m = &device.motor[1];
 
         if(!m->flags & (MOT_FORWARD | MOT_BACKWARD))
-                m->throttle_actual = 0;
+                 m->throttle_actual = 0;
         else {
                 if(m->flags & MOT_FORWARD)
                         MOT2_FWD_PORT |= MOT2_FWD_PIN;
@@ -170,7 +172,10 @@ void update_motors(void)
 
         
 
-                
+        motor_set_power(1, 50);//device.motor[0].throttle_actual/10);
+		motor_set_power(2, 50);//device.motor[1].throttle_actual/10);
+        device.motor[0].flags = MOT_FORWARD;
+		device.motor[1].flags = MOT_FORWARD;
 }
 
 static uint16_t read_adc(int channel)
