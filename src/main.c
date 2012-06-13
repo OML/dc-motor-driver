@@ -61,20 +61,17 @@ int16_t main(void)
         /* Configure the oscillator for the device */
         ConfigureOscillator();
 
-		clock_start();
+        clock_start();
         
-        bus_init(1, DT_DUAL_MOTOR);
+        bus_init(1, DT_DUAL_MOTOR_FRONT);
 
         init_motors();
 
 
         while(1)
         {
-		
-		//	while(U1STAbits.UTXBF);
-		//	U1TXREG = 'U';
-              update_motors();
-              read_sensors();      
-              bus_do_work();
+               update_motors();
+               read_sensors();      
+               bus_do_work();
         }
 }
