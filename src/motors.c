@@ -130,10 +130,10 @@ static uint16_t adval_to_voltage(uint16_t val)
 void read_sensors(void)
 {
         struct bus_motor_sensors[2] new_sensors;
-        sensors[0].temperature = adval_to_temp(read_adc(MOT1_TEMP_CHAN));
-        sensors[0].current = adval_to_current(read_adc(MOT1_CURRENT_CHAN));
-        sensors[0].voltage = adval_to_voltage(read_adc(MOT1_VOLTAGE_CHAN));
-        sensors[0].temperature = adval_to_temp(read_adc(MOT2_TEMP_CHAN));
-        sensors[0].current = adval_to_current(read_adc(MOT2_CURRENT_CHAN));
-        sensors[0].voltage = adval_to_voltage(read_adc(MOT2_VOLTAGE_CHAN));
+        new_sensors[0].temperature = adval_to_temp(read_adc(MOT1_TEMP_CHAN));
+        new_sensors[0].current = adval_to_current(read_adc(MOT1_CURRENT_CHAN));
+        new_sensors[0].voltage = adval_to_voltage(read_adc(MOT1_VOLTAGE_CHAN));
+        new_sensors[0].temperature = adval_to_temp(read_adc(MOT2_TEMP_CHAN));
+        new_sensors[0].current = adval_to_current(read_adc(MOT2_CURRENT_CHAN));
+        new_sensors[0].voltage = adval_to_voltage(read_adc(MOT2_VOLTAGE_CHAN));
 }

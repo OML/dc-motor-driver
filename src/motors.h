@@ -41,7 +41,8 @@ void init_motors(void);
 void motor_set_power(int motor, uint8_t value);
 void update_motors(void);
 
-extern struct bus_motor_sensors[2];
+extern struct bus_motor_sensors thresholds;
+extern struct bus_motor_sensors sensors[2];
 void read_sensors(void);
 
 extern struct motcon_buffer device;
