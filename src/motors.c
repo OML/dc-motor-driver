@@ -114,8 +114,7 @@ static uint16_t read_adc(int channel)
 
 static uint16_t adval_to_temp(uint16_t val)
 {
-#warning "adval_to_temp not implemented"
-    return val;
+        return ((uint32_t)((12900L*val)/10000L));
 }
 
 static uint16_t adval_to_current(uint16_t val)
@@ -125,8 +124,8 @@ static uint16_t adval_to_current(uint16_t val)
 
 static uint16_t adval_to_voltage(uint16_t val)
 {
-#warning "adval_to_voltage not implemented"
-    return val;
+
+        return ((uint32_t)(val/31L))
 }
 
 void read_sensors(void)
