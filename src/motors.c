@@ -3,9 +3,11 @@
 
 #include "device.h"
 
-temperature_t temps[2];
-voltage_t voltages[2];
-current_t currents[2];
+#include <stdlib.h>
+#include <offsets.h>
+
+struct bus_motor_sensors thresholds = {200, 50, 10};
+struct bus_motor_sensors sensors[2];
 
 #define PWM_PERIOD 6400
 
@@ -103,10 +105,10 @@ void motor_set_power(int motor, uint8_t value)
 
 static uint16_t read_adc(int channel)
 {
-    AD1CHSbits.CH0SA = channel;
-    AD1CON1bits.SAMP = 1;
-    while(!AD1CON1bits.DONE);
-    return *((&ADC1BUF0) + channel);
+        AD1CHSbits.CH0SA = channel;
+        AD1CON1bits.SAMP = 1;
+        while(!AD1CON1bits.DONE);
+        return *((&ADC1BUF0) + channel);
 }
 
 
@@ -124,16 +126,48 @@ static uint16_t adval_to_current(uint16_t val)
 
 static uint16_t adval_to_voltage(uint16_t val)
 {
+        return ((uint32_t)(val/31L));
+}
 
-        return ((uint32_t)(val/31L))
+void send_sensors(void)
+{
+        int plen = get_bus_motor_sensors_event(NULL) + sizeof(struct bus_motor_sensors_event);
+        char buffer[plen];
+        struct bus_hdr* header = get_bus_header(buffer);
+        struct bus_event_hdr* event_hdr = get_bus_event_header(buffer);
+        struct bus_motor_sensors_event* event = get_bus_motor_sensors_event(buffer);
+
+        header->opcode.op = BUSOP_EVENT;
+        header->saddr = addr;
+        header->daddr = 0;
+        header->dtype = DT_IPC;
+        
+        event_hdr->timestamp = rt_clock();
+        event_hdr->type = EV_MOTOR_SENSORS;
+
+        event->sensors[0] = sensors[0];
+        event->sensors[1] = sensors[1]; 
+
+        bus_send_event(buffer, plen);
+
 }
 
 void read_sensors(void)
 {
-    temps[0] = adval_to_temp(read_adc(MOT1_TEMP_CHAN));
-    currents[0] = adval_to_current(read_adc(MOT1_CURRENT_CHAN));
-    voltages[0] = adval_to_voltage(read_adc(MOT1_VOLTAGE_CHAN));
-    temps[1] = adval_to_temp(read_adc(MOT2_TEMP_CHAN));
-    currents[1] = adval_to_current(read_adc(MOT2_CURRENT_CHAN));
-    voltages[1] = adval_to_voltage(read_adc(MOT2_VOLTAGE_CHAN));
+        struct bus_motor_sensors new_sensors[2];
+
+        new_sensors[0].temperature = adval_to_temp(read_adc(MOT1_TEMP_CHAN));
+        new_sensors[0].current = adval_to_current(read_adc(MOT1_CURRENT_CHAN));
+        new_sensors[0].voltage = adval_to_voltage(read_adc(MOT1_VOLTAGE_CHAN));
+        new_sensors[0].temperature = adval_to_temp(read_adc(MOT2_TEMP_CHAN));
+        new_sensors[0].current = adval_to_current(read_adc(MOT2_CURRENT_CHAN));
+        new_sensors[0].voltage = adval_to_voltage(read_adc(MOT2_VOLTAGE_CHAN));
+
+        if(abs((int32_t)new_sensors[0].temperature - (int32_t)sensors[0].temperature) > thresholds.temperature
+                || abs((int32_t)new_sensors[0].current - (int32_t)sensors[0].current) > thresholds.current
+                || abs((int32_t)new_sensors[0].voltage - (int32_t)sensors[0].voltage) > thresholds.voltage) {
+                sensors[0] = new_sensors[0];
+                sensors[1] = new_sensors[1];
+                send_sensors();
+        }
 }
