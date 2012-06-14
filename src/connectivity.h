@@ -1,7 +1,6 @@
 #ifndef _CONNECTIVITY_H
 #define _CONNECTIVITY_H
 
-#include "prot_motcon.h"
 #include <bus.h>
 
 extern volatile uint8_t buffer[];

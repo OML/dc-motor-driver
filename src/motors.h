@@ -37,7 +37,9 @@ void init_motors(void);
 void motor_set_power(int motor, uint8_t value);
 void update_motors(void);
 
-
+extern temperature_t temps[2];
+extern voltage_t voltages[2];
+extern current_t currents[2];
 void read_sensors(void);
 
 extern struct motcon_buffer device;

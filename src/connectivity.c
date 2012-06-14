@@ -13,7 +13,6 @@ volatile uint8_t do_once = 0;
 void uart_init(struct uart_descriptor* uart, size_t uid)
 {
         main_uart = uart;
-        memset(&device, 0, sizeof(struct motcon_buffer));
 
 		TRISBbits.TRISB2 = 1;
 		ANSBbits.ANSB2 = 0;
