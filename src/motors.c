@@ -3,6 +3,10 @@
 
 #include "device.h"
 
+#include <stdlib.h>
+#include <offsets.h>
+
+struct bus_motor_sensors thresholds = {200, 50, 10};
 struct bus_motor_sensors sensors[2];
 
 #define PWM_PERIOD 6400
@@ -127,13 +131,44 @@ static uint16_t adval_to_voltage(uint16_t val)
     return val;
 }
 
+void send_sensors(void)
+{
+        int plen = get_bus_motor_sensors_event(NULL) + sizeof(struct bus_motor_sensors_event);
+        char buffer[plen];
+        struct bus_hdr* header = get_bus_header(buffer);
+        struct bus_event_hdr* event_hdr = get_bus_event_header(buffer);
+        struct bus_motor_sensors_event* event = get_bus_motor_sensors_event(buffer);
+
+        header->opcode.op = BUSOP_EVENT;
+        header->saddr = addr;
+        header->daddr = 0;
+        header->dtype = DT_IPC;
+        
+        event_hdr->timestamp = rt_clock();
+        event_hdr->type = EV_MOTOR_SENSORS;
+
+        event->sensors[0] = sensors[0];
+        event->sensors[1] = sensors[1]; 
+
+        bus_send_event(buffer, plen);
+}
+
 void read_sensors(void)
 {
-        struct bus_motor_sensors[2] new_sensors;
+        struct bus_motor_sensors new_sensors[2];
+
         new_sensors[0].temperature = adval_to_temp(read_adc(MOT1_TEMP_CHAN));
         new_sensors[0].current = adval_to_current(read_adc(MOT1_CURRENT_CHAN));
         new_sensors[0].voltage = adval_to_voltage(read_adc(MOT1_VOLTAGE_CHAN));
         new_sensors[0].temperature = adval_to_temp(read_adc(MOT2_TEMP_CHAN));
         new_sensors[0].current = adval_to_current(read_adc(MOT2_CURRENT_CHAN));
         new_sensors[0].voltage = adval_to_voltage(read_adc(MOT2_VOLTAGE_CHAN));
+
+        if(abs((int32_t)new_sensors[0].temperature - (int32_t)sensors[0].temperature) > thresholds.temperature
+                || abs((int32_t)new_sensors[0].current - (int32_t)sensors[0].current) > thresholds.current
+                || abs((int32_t)new_sensors[0].voltage - (int32_t)sensors[0].voltage) > thresholds.voltage) {
+                sensors[0] = new_sensors[0];
+                sensors[1] = new_sensors[1];
+                send_sensors();
+        }
 }
