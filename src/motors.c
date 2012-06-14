@@ -3,9 +3,7 @@
 
 #include "device.h"
 
-temperature_t temps[2];
-voltage_t voltages[2];
-current_t currents[2];
+struct bus_motor_sensors sensors[2];
 
 #define PWM_PERIOD 6400
 
@@ -103,10 +101,10 @@ void motor_set_power(int motor, uint8_t value)
 
 static uint16_t read_adc(int channel)
 {
-    AD1CHSbits.CH0SA = channel;
-    AD1CON1bits.SAMP = 1;
-    while(!AD1CON1bits.DONE);
-    return *((&ADC1BUF0) + channel);
+        AD1CHSbits.CH0SA = channel;
+        AD1CON1bits.SAMP = 1;
+        while(!AD1CON1bits.DONE);
+        return *((&ADC1BUF0) + channel);
 }
 
 
@@ -115,7 +113,7 @@ static uint16_t read_adc(int channel)
 static uint16_t adval_to_temp(uint16_t val)
 {
 #warning "adval_to_temp not implemented"
-    return val;
+        return val;
 }
 
 static uint16_t adval_to_current(uint16_t val)
@@ -131,10 +129,11 @@ static uint16_t adval_to_voltage(uint16_t val)
 
 void read_sensors(void)
 {
-    temps[0] = adval_to_temp(read_adc(MOT1_TEMP_CHAN));
-    currents[0] = adval_to_current(read_adc(MOT1_CURRENT_CHAN));
-    voltages[0] = adval_to_voltage(read_adc(MOT1_VOLTAGE_CHAN));
-    temps[1] = adval_to_temp(read_adc(MOT2_TEMP_CHAN));
-    currents[1] = adval_to_current(read_adc(MOT2_CURRENT_CHAN));
-    voltages[1] = adval_to_voltage(read_adc(MOT2_VOLTAGE_CHAN));
+        struct bus_motor_sensors[2] new_sensors;
+        sensors[0].temperature = adval_to_temp(read_adc(MOT1_TEMP_CHAN));
+        sensors[0].current = adval_to_current(read_adc(MOT1_CURRENT_CHAN));
+        sensors[0].voltage = adval_to_voltage(read_adc(MOT1_VOLTAGE_CHAN));
+        sensors[0].temperature = adval_to_temp(read_adc(MOT2_TEMP_CHAN));
+        sensors[0].current = adval_to_current(read_adc(MOT2_CURRENT_CHAN));
+        sensors[0].voltage = adval_to_voltage(read_adc(MOT2_VOLTAGE_CHAN));
 }
