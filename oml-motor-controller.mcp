@@ -77,7 +77,7 @@ file_007=src\connectivity.h
 file_008=src\device.h
 file_009=src\motors.h
 file_010=src\system.h
-file_011=C:\Users\Wouter\workspace\libbusprot\bin\libbusprot.a
+file_011=D:\Users\Leon\Development\School\OML\libbusprot\bin\libbusprot.a
 file_012=protocol.txt
 [SUITE_INFO]
 suite_guid={479DDE59-4D56-455E-855E-FFF59A3DB57E}

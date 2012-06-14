@@ -19,12 +19,16 @@
 #define MOT2_VOLTAGE_CHAN   12
 #define MOT2_TEMP_CHAN      15
 
+#define MOT1_FWD_LATCH          LATA
 #define MOT1_FWD_PORT           PORTA
 #define MOT1_FWD_PIN            (1 << 7)
+#define MOT1_BACK_LATCH         LATB
 #define MOT1_BACK_PORT          PORTB
 #define MOT1_BACK_PIN           (1 << 9)
+#define MOT2_FWD_LATCH          LATB
 #define MOT2_FWD_PORT           PORTB
 #define MOT2_FWD_PIN            (1 << 8)
+#define MOT2_BACK_LATCH         LATB
 #define MOT2_BACK_PORT          PORTB
 #define MOT2_BACK_PIN           (1 << 6)
 
